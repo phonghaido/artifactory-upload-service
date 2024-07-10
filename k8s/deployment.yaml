@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: artifactory-upload
+  namespace: artifactory
+  labels:
+    app: artifactory-upload
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: artifactory-upload
+  template:
+    metadata:
+      labels:
+        app: artifactory-upload
+    spec:
+      containers:
+      - name: artifactory-upload
+        image: artifactory-upload:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
