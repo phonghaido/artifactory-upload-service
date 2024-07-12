@@ -16,5 +16,8 @@ run:
 docker-build:
 	docker build -t artifactory-upload:latest .
 
-deploy:
+k8s-apply:
 	kubectl apply -k ./k8s/_base
+	kubectl rollout restart -n artifactory deployment/artifactory-upload
+
+deploy: docker-build k8s-apply
