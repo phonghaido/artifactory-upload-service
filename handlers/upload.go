@@ -55,16 +55,16 @@ func HandlePostUploadFile(c echo.Context) error {
 
 	file, err := c.FormFile("file")
 	if err != nil {
-		return helpers.InvalidFile(err)
+		return helpers.InvalidFileKey()
 	}
 
 	if file.Size > config.MaxSize {
-		return helpers.InvalidFileSize()
+		return helpers.InvalidFileSize(config.MaxSize)
 	}
 
 	src, err := file.Open()
 	if err != nil {
-		return helpers.InvalidFile(err)
+		return err
 	}
 	defer src.Close()
 
@@ -93,19 +93,26 @@ func HandlePostUploadFiles(c echo.Context) error {
 
 	form, err := c.MultipartForm()
 	if err != nil {
-		return helpers.InvalidFile(err)
+		return helpers.InvalidForm(err)
 	}
+
+	for key := range form.File {
+		if key != "files" {
+			return helpers.InvalidFileKey()
+		}
+	}
+
 	files := form.File["files"]
 
 	var wg sync.WaitGroup
 	for _, file := range files {
-		if file.Size > config.MaxSize {
-			return helpers.InvalidFileSize()
+		if file.Size > config.MaxSize && config.MaxSize != 0 {
+			return helpers.InvalidFileSize(config.MaxSize)
 		}
 
 		src, err := file.Open()
 		if err != nil {
-			return helpers.InvalidFile(err)
+			return err
 		}
 		defer src.Close()
 

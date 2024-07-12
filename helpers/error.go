@@ -53,10 +53,14 @@ func MethodNotAllowed() error {
 	return NewAPIError(http.StatusMethodNotAllowed, fmt.Errorf("method not allowed"))
 }
 
-func InvalidFile(err error) error {
-	return NewAPIError(http.StatusBadRequest, fmt.Errorf(err.Error()))
+func InvalidForm(err error) error {
+	return NewAPIError(http.StatusBadRequest, fmt.Errorf("invalid form data: %s", err.Error()))
 }
 
-func InvalidFileSize() error {
-	return NewAPIError(http.StatusBadRequest, fmt.Errorf("file size exceeds 100 MB"))
+func InvalidFileSize(maxSize int64) error {
+	return NewAPIError(http.StatusBadRequest, fmt.Errorf("file size exceeds %d byte(s)", maxSize))
+}
+
+func InvalidFileKey() error {
+	return NewAPIError(http.StatusBadRequest, fmt.Errorf("the key should be 'file' for single file uploading and 'files' for multiple files uploading"))
 }
