@@ -21,9 +21,9 @@ commonLabels:
 configMapGenerator:
   - name: artifactory-upload-config
     literals:
-      - ARTIFACTORY_AWS_REGION=eu-central-1
-      - ARTIFACTORY_S3_BUCKET=artifactory-platform
-      - ARTIFACTORY_MAX_SIZE=104857600
+      - ARTIFACTORY_AWS_REGION=""
+      - ARTIFACTORY_S3_BUCKET=""
+      - ARTIFACTORY_MAX_SIZE=""
 
 secretGenerator:
   - name: artifactory-upload-secret
