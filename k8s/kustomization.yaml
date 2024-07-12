@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - deployment.yaml
+  - service.yaml
+
+images:
+  - name: artifactory-upload-image
+    newName: artifactory-upload
+    newTag: latest
+
+namespace: artifactory
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+commonLabels:
+  app: artifactory-upload
+
+configMapGenerator:
+  - name: artifactory-upload-config
+    literals:
+      - ARTIFACTORY_AWS_REGION=eu-central-1
+      - ARTIFACTORY_S3_BUCKET=artifactory-platform
+      - ARTIFACTORY_MAX_SIZE=104857600
+
+secretGenerator:
+  - name: artifactory-upload-secret
+    literals:
+      - ARTIFACTORY_AWS_ACCESS_KEY_ID=""
+      - ARTIFACTORY_AWS_SECRET_ACCESS_KEY=""

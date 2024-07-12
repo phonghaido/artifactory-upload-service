@@ -15,9 +15,15 @@ spec:
       labels:
         app: artifactory-upload
     spec:
+      shareProcessNamespace: true
       containers:
       - name: artifactory-upload
-        image: artifactory-upload:latest
+        image: artifactory-upload-image
         imagePullPolicy: Never
+        envFrom:
+        - configMapRef:
+            name: artifactory-upload-config
+        - secretRef:
+            name: artifactory-upload-secret
         ports:
         - containerPort: 8080
