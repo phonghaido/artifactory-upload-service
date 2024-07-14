@@ -30,3 +30,4 @@ secretGenerator:
     literals:
       - ARTIFACTORY_AWS_ACCESS_KEY_ID=""
       - ARTIFACTORY_AWS_SECRET_ACCESS_KEY=""
+      - ARTIFACTORY_POSTGRES_CONN_STR=""

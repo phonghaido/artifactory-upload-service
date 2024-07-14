@@ -64,3 +64,7 @@ func InvalidFileSize(maxSize int64) error {
 func InvalidFileKey() error {
 	return NewAPIError(http.StatusBadRequest, fmt.Errorf("the key should be 'file' for single file uploading and 'files' for multiple files uploading"))
 }
+
+func Unauthorized() error {
+	return NewAPIError(http.StatusUnauthorized, fmt.Errorf("Unauthorized"))
+}

@@ -12,6 +12,7 @@ type Config struct {
 	AWSRegion          string `json:"aws_region"`
 	S3Bucket           string `json:"s3_bucket"`
 	MaxSize            int64  `json:"max_size"`
+	PostgresConnStr    string `json:"postgres_conn_str"`
 }
 
 func GetConfig() (*Config, error) {
@@ -23,6 +24,7 @@ func GetConfig() (*Config, error) {
 	viper.SetDefault("AWS_REGION", "")
 	viper.SetDefault("S3_BUCKET", "")
 	viper.SetDefault("MAX_SIZE", "")
+	viper.SetDefault("POSTGRES_CONN_STR", "")
 
 	maxSize, err := strconv.Atoi(viper.GetString("MAX_SIZE"))
 	if err != nil {
@@ -35,5 +37,6 @@ func GetConfig() (*Config, error) {
 		AWSRegion:          viper.GetString("AWS_REGION"),
 		S3Bucket:           viper.GetString("S3_BUCKET"),
 		MaxSize:            int64(maxSize),
+		PostgresConnStr:    viper.GetString("POSTGRES_CONN_STR"),
 	}, nil
 }
